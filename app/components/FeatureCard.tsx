@@ -1,49 +1,43 @@
-import React from "react";
 import Link from "next/link";
 
 type FeatureCardProps = {
+  icon?: string;
   title: string;
   description: string;
-  icon?: string;
   href?: string;
   premium?: boolean;
 };
 
 export default function FeatureCard({
+  icon,
   title,
   description,
-  icon,
   href,
   premium = false,
 }: FeatureCardProps) {
   const CardContent = (
     <div
       style={{
-        padding: "28px",
-        borderRadius: "16px",
+        padding: "24px",
+        borderRadius: "12px",
+        border: premium ? "2px solid #3E2F2A" : "1px solid #E6DDD8",
         backgroundColor: "#FFFFFF",
-        boxShadow: "0 10px 30px rgba(0,0,0,0.06)",
-        border: premium ? "2px solid #D4AF37" : "1px solid #EEE",
-        transition: "transform 0.2s ease, box-shadow 0.2s ease",
+        boxShadow: "0 4px 12px rgba(0,0,0,0.04)",
+        transition: "transform 0.2s ease",
+        height: "100%",
       }}
     >
       {icon && (
-        <div
-          style={{
-            fontSize: "32px",
-            marginBottom: "12px",
-          }}
-        >
+        <div style={{ fontSize: "28px", marginBottom: "12px" }}>
           {icon}
         </div>
       )}
 
       <h3
         style={{
-          fontSize: "20px",
+          fontSize: "18px",
           fontWeight: 600,
           marginBottom: "8px",
-          color: "#3E2F2A",
         }}
       >
         {title}
@@ -52,22 +46,20 @@ export default function FeatureCard({
             style={{
               marginLeft: "8px",
               fontSize: "12px",
-              padding: "4px 8px",
-              backgroundColor: "#D4AF37",
-              color: "#fff",
-              borderRadius: "8px",
+              color: "#3E2F2A",
+              fontWeight: 500,
             }}
           >
-            PREMIUM
+            • Premium
           </span>
         )}
       </h3>
 
       <p
         style={{
-          fontSize: "15px",
-          lineHeight: 1.6,
+          fontSize: "14px",
           color: "#6B5B53",
+          lineHeight: 1.6,
         }}
       >
         {description}
@@ -75,13 +67,21 @@ export default function FeatureCard({
     </div>
   );
 
+  // If href exists → clickable card
   if (href) {
     return (
-      <Link href={href} style={{ textDecoration: "none" }}>
+      <Link
+        href={href}
+        style={{
+          textDecoration: "none",
+          color: "inherit",
+        }}
+      >
         {CardContent}
       </Link>
     );
   }
 
+  // If no href → static card
   return CardContent;
 }
