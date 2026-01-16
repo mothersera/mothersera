@@ -1,8 +1,8 @@
-import Stripe from "stripe";
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+import { NextResponse } from "next/server";
 
 export async function GET() {
-  const balance = await stripe.balance.retrieve();
-  return Response.json(balance);
+  return NextResponse.json({
+    status: "disabled",
+    message: "Stripe test endpoint disabled. Razorpay will be used later.",
+  });
 }
