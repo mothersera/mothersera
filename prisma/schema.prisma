@@ -1,0 +1,17 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+/*
+  Premium users table
+*/
+model User {
+  id        String   @id @default(cuid())
+  email     String?  @unique
+  premium   Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

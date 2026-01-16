@@ -1,65 +1,195 @@
-import Image from "next/image";
+import Link from "next/link";
+import Section from "./components/Section";
+import FeatureCard from "./components/FeatureCard";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <main
+      style={{
+        minHeight: "100vh",
+        backgroundColor: "#FDF7F3",
+        fontFamily: "system-ui, -apple-system, BlinkMacSystemFont",
+        color: "#3E2F2A",
+      }}
+    >
+      {/* TOP NAV */}
+      <header
+        style={{
+          padding: "20px 24px",
+          borderBottom: "1px solid #EFE6E1",
+          backgroundColor: "#FDF7F3",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1100px",
+            margin: "0 auto",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <strong style={{ fontSize: "20px" }}>Mother Era</strong>
+
+          <nav style={{ display: "flex", gap: "20px", fontSize: "14px" }}>
+            <Link href="/">Home</Link>
+            <Link href="/pricing">Premium</Link>
+            <Link href="/contact">Contact</Link>
+          </nav>
+        </div>
+      </header>
+
+      {/* HERO */}
+      <section style={{ padding: "80px 24px", textAlign: "center" }}>
+        <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+          <h1 style={{ fontSize: "48px", fontWeight: 700 }}>
+            Mother Era
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+
+          <p
+            style={{
+              fontSize: "18px",
+              maxWidth: "720px",
+              margin: "24px auto",
+              color: "#6B5B53",
+              lineHeight: 1.7,
+            }}
+          >
+            A science-backed, premium motherhood platform — guiding women from
+            pregnancy to early childhood with clarity, confidence, and care.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+          <Link
+            href="/pricing"
+            style={{
+              display: "inline-block",
+              marginTop: "20px",
+              padding: "12px 24px",
+              backgroundColor: "#3E2F2A",
+              color: "#fff",
+              borderRadius: "6px",
+              textDecoration: "none",
+              fontSize: "14px",
+            }}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            View Premium Plans
+          </Link>
         </div>
-      </main>
-    </div>
+      </section>
+
+      {/* JOURNEYS */}
+      <Section
+        title="Choose Your Journey"
+        subtitle="Each path is research-driven, age-specific, and designed for long-term health."
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "28px",
+          }}
+        >
+          <FeatureCard
+            icon="🌱"
+            title="Planning Pregnancy"
+            description="Hormonal balance, fertility windows, nutrition, and partner readiness — before conception."
+            href="/planning"
+          />
+
+          <FeatureCard
+            icon="🤰"
+            title="Pregnancy"
+            description="Trimester-wise care, do’s & don’ts, emotional health, nutrition, and birth preparation."
+            href="/pregnant"
+          />
+
+          <FeatureCard
+            icon="🍼"
+            title="New Mother"
+            description="Postpartum recovery, mental well-being, breastfeeding guidance, and healing support."
+            href="/new-mother"
+          />
+
+          <FeatureCard
+            icon="👶"
+            title="Baby Growth (0–5 Years)"
+            description="Diet plans, milestones, brain development, physical growth, and habit building."
+            href="/baby-growth"
+          />
+
+          <FeatureCard
+            icon="😴"
+            title="Baby Sleep"
+            description="Age-wise sleep schedules, circadian rhythm care, and sleep regression handling."
+            href="/baby-sleep"
+          />
+
+          <FeatureCard
+            icon="🛡️"
+            title="Immunity & Health"
+            description="Natural immunity building, vaccinations, micronutrients, and illness prevention."
+            href="/immunity"
+          />
+        </div>
+      </Section>
+
+      {/* EXPERT GUIDANCE */}
+      <Section
+        title="Expert Guidance"
+        subtitle="Get trusted advice from certified professionals at every stage of motherhood."
+      >
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
+            gap: "28px",
+          }}
+        >
+          
+
+          <FeatureCard
+            icon="🥗"
+            title="Nutritionists"
+            description="Personalized diet plans for mothers and growing children."
+            href="/experts"
+            premium
+          />
+
+          <FeatureCard
+            icon="🧠"
+            title="One on One Live Expert"
+            description="Mental health support for mothers, stress management, and emotional well-being."
+            href="/experts"
+            premium
+          />
+
+          
+        </div>
+      </Section>
+
+      {/* FOOTER */}
+      <footer
+        style={{
+          padding: "40px 24px",
+          marginTop: "80px",
+          borderTop: "1px solid #EFE6E1",
+          textAlign: "center",
+          fontSize: "14px",
+          color: "#7A6A63",
+        }}
+      >
+        <p>Designed with care. Built for generations.</p>
+
+        <div style={{ marginTop: "12px" }}>
+          <Link href="/terms">Terms</Link> ·{" "}
+          <Link href="/privacy">Privacy</Link> ·{" "}
+          <Link href="/contact">Contact</Link>
+        </div>
+
+        <p style={{ marginTop: "12px", fontSize: "12px", color: "#9A8A83" }}>
+          © Mother Era — Premium Maternal & Child Health Platform
+        </p>
+      </footer>
+    </main>
   );
 }
