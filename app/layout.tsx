@@ -1,10 +1,5 @@
 import "./globals.css";
-
-export const metadata = {
-  title: "Mother Era",
-  description:
-    "Mother Era is a science-backed maternal and child health platform guiding women from pregnancy to early childhood.",
-};
+import Header from "./components/Header";
 
 export default function RootLayout({
   children,
@@ -13,7 +8,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <Header />
+        {children}
+      </body>
     </html>
   );
 }
