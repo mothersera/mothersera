@@ -1,8 +1,7 @@
-import { BuilderComponent, builder } from "@builder.io/react";
-import DefaultErrorPage from "next/error";
+"use client";
 
-// Initialize Builder with your API key
-builder.init(process.env.NEXT_PUBLIC_BUILDER_API_KEY || "");
+import { useEffect, useState } from "react";
+import DefaultErrorPage from "next/error";
 
 interface PageProps {
   params: {
@@ -10,47 +9,89 @@ interface PageProps {
   };
 }
 
-export default async function Page({ params }: PageProps) {
+export default function Page({ params }: PageProps) {
+  const [content, setContent] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
+
   const page = "/" + (params.page?.join("/") || "");
 
-  // Fetch Builder.io content for this page
-  const content = await builder
-    .get("page", {
-      userAttributes: {
-        urlPath: page,
-      },
-    })
-    .toPromise();
+  useEffect(() => {
+    const fetchContent = async () => {
+      try {
+        const apiKey = process.env.NEXT_PUBLIC_BUILDER_API_KEY;
+        if (!apiKey) {
+          console.warn("NEXT_PUBLIC_BUILDER_API_KEY is not set");
+          setNotFound(true);
+          return;
+        }
 
-  // If no content found, show 404
-  if (!content) {
+        // Fetch from Builder.io Content API
+        const response = await fetch(
+          `https://cdn.builder.io/api/v2/content/page?apiKey=${apiKey}&userAttributes.urlPath=${encodeURIComponent(
+            page
+          )}&limit=1`
+        );
+
+        if (!response.ok) {
+          setNotFound(true);
+          return;
+        }
+
+        const data = await response.json();
+        if (data.results && data.results.length > 0) {
+          setContent(data.results[0]);
+        } else {
+          setNotFound(true);
+        }
+      } catch (error) {
+        console.error("Error fetching Builder.io content:", error);
+        setNotFound(true);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchContent();
+  }, [page]);
+
+  if (loading) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          fontSize: "18px",
+          color: "#666",
+        }}
+      >
+        Loading...
+      </div>
+    );
+  }
+
+  if (notFound || !content) {
     return <DefaultErrorPage statusCode={404} />;
   }
 
   // Render the Builder.io content
+  // For now, display a simple message that content is loaded from Builder
   return (
-    <BuilderComponent model="page" content={content} />
+    <div
+      style={{
+        minHeight: "100vh",
+        padding: "20px",
+        backgroundColor: "#f7efe9",
+      }}
+    >
+      <p style={{ color: "#666", textAlign: "center" }}>
+        Page content is being loaded from Builder.io
+      </p>
+      <pre style={{ whiteSpace: "pre-wrap", wordWrap: "break-word" }}>
+        {JSON.stringify(content, null, 2)}
+      </pre>
+    </div>
   );
 }
-
-// Generate static pages at build time (optional, for better performance)
-export async function generateStaticParams() {
-  // Fetch all published pages from Builder.io
-  const pages = await builder
-    .getAll("page", {
-      options: { noTargeting: true },
-    });
-
-  return pages
-    .map((page: any) => {
-      const path = page.data?.url || "";
-      const segments = path.split("/").filter((s: string) => s);
-      return {
-        page: segments,
-      };
-    })
-    .filter((p: any) => p.page.length > 0);
-}
-
-// Revalidate pages every hour (ISR - Incremental Static Regeneration)
-export const revalidate = 3600;
