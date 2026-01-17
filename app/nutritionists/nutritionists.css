@@ -1,0 +1,8 @@
+/* Nutritionists Page Styles */
+
+.nutritionists-main {
+  min-height: 100vh;
+  background-color: #f7efe9;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  color: #3e2f2a;
+}
