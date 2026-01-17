@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
-import { BuilderComponent, builder } from "@builder.io/react";
+import { builder } from "@builder.io/sdk";
+import BuilderPageRenderer from "@/app/components/BuilderPageRenderer";
 import { BUILDER_API_KEY } from "@/lib/builder";
 
 interface PageProps {
@@ -15,10 +16,8 @@ async function getBuilderContent(urlPath: string) {
   }
 
   try {
-    // Initialize builder if not already done
-    if (!builder.authToken) {
-      builder.init(BUILDER_API_KEY);
-    }
+    // Initialize builder SDK (server-side only)
+    builder.init(BUILDER_API_KEY);
 
     const content = await builder
       .get("page", {
@@ -56,13 +55,6 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  return (
-    <BuilderComponent
-      model="page"
-      content={content}
-      data={{
-        urlPath: urlPath,
-      }}
-    />
-  );
+  // Pass content to client component for rendering
+  return <BuilderPageRenderer content={content} urlPath={urlPath} />;
 }
