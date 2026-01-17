@@ -159,7 +159,7 @@ export default function HomePage() {
             icon="🧠"
             title="One on One Live Expert"
             description="Mental health support for mothers, stress management, and emotional well-being."
-            href="/experts"
+            href="/nutritionists"
             premium
           />
 
