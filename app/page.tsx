@@ -151,7 +151,7 @@ export default function HomePage() {
             icon="🥗"
             title="Nutritionists"
             description="Personalized diet plans for mothers and growing children."
-            href="/experts"
+            href="/nutritionists"
             premium
           />
 
